@@ -19,7 +19,14 @@ Data Processing:
 
 
 #####
-Alexandrove and collegaues develpoed an alogrithm using non-negative matric factorization (NMF) and model selection to extract the signatures of mutational processes presnt in 5 million mutations in over 7000 cancer genomes to identify about 30 signatures presnt accross 30 tumor types. In simulations it was found that atleat 200 WGS were required to determine the signatures of 20 mutational processes. With exome sequencing covering only % of the human genome , resulting in fewer mutations identified , it would require thousands of samples. Therefore, application of there method was not feasible in this case of about 50 samples, here we used 2 establisded R-packages deconstructSigs and MuttaionalPatterns
+Alexandrove and collegaues develpoed an alogrithm using non-negative matric factorization (NMF) and model selection to extract the signatures of mutational processes presnt in 5 million mutations in over 7000 cancer genomes to identify about 30 signatures presnt accross 30 tumor types. In simulations it was found that atleat 200 WGS were required to determine the signatures of 20 mutational processes. With exome sequencing covering only % of the human genome , resulting in fewer mutations identified , it would require thousands of samples. Therefore, application of there method was not feasible in this case of about 50 samples, here we used 2 establisded R-packages deconstructSigs and MuttaionalPatterns.
+
+The deconstructSigs approache determines the linear combination of predefined signatures that most accurately reconstructs the mutational profile of a single tumor sample. 
 
 ###
 Step1 :
+Each sample information was avaiable as MAF file. The daat was substetted to create the most basic inpput of the deconctructSigs.It is a Dataframe consisting of genomic position base change for each mutation, as well as sample identifiert. Using the command "mut.to.sigs.input" this mutational data is convereted to n-row and 96 columns dataframe where n = number of unique samples. We created two such data frames one for primary and one for recurrent medulloblastoma. "Germline_Primary_Sigs_Input" and ""
+
+Step2:
+Using "whichSignatures" it was determined how much of each signature is present in the sample given. The identified signatures were then plotted.
+
