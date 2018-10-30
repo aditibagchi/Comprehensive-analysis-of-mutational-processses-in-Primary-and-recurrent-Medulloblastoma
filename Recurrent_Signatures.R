@@ -139,26 +139,24 @@ View(Final_recurrant_DF)
 Packages Used
 ##MutationalPatterns
 ##BSgenome.Hsapiens.UCSC.hg19
+Final_recurrent_DF1 <- read.csv("~/Desktop/Final_recurrent_DF.csv")
+Final_recurrent_DF1 <- as.data.frame(Final_recurrent_DF1)
+View(Final_recurrent_DF1)
+Final_recurrent_DF1_t <- t(Final_recurrent_DF1)
+View(Final_recurrent_DF1_t)
+Germline_Met_Recur_Sigs_t <- t(Germline_Met_Recur_Sigs)
 
-Final_recurrant_DF_t  <- t(Final_recurrant_DF)
-View(Final_recurrant_DF_t)
+Packages Used
+##MutationalPatterns
+##BSgenome.Hsapiens.UCSC.hg19
+
 sp_url <- paste("http://cancer.sanger.ac.uk/cancergenome/assets/","signatures_probabilities.txt", sep = "")
 cancer_signatures = read.table(sp_url, sep = "\t", header = TRUE)
 # Match the order of the mutation types to MutationalPatterns standard
-new_order = match(row.names(Final_recurrant_DF_t), cancer_signatures$Somatic.Mutation.Type)
-#Reorder cancer signatures dataframe
+new_order = match(row.names(DF_sigs_input_recurrent_t), cancer_signatures$Somatic.Mutation.Type)
+# Reorder cancer signatures dataframe
 cancer_signatures = cancer_signatures[as.vector(new_order),]
 # Add trinucletiode changes names as row.names
 row.names(cancer_signatures) = cancer_signatures$Somatic.Mutation.Type
 # Keep only 96 contributions of the signatures in matrix
 cancer_signatures = as.matrix(cancer_signatures[,4:33])
-cos_sim(Final_recurrant_DF_t[,1], cancer_signatures[,1])
-cos_sim_samples_signatures = cos_sim_matrix(Final_recurrant_DF_t, cancer_signatures)
-# Plot heatmap with specified signature order
-plot_cosine_heatmap(cos_sim_samples_signatures,cluster_rows = TRUE)
-##Fit Mutation matrix to the cosmic mutational signature
-fit_res <- fit_to_signatures(Final_recurrant_DF_t, cancer_signatures)
-# Select signatures with some contribution
-select <- which(rowSums(fit_res$contribution) > 10)
-# Plot contribution barplot
-plot_contribution(fit_res$contribution[select,],cancer_signatures[,select],coord_flip = FALSE, mode = "absolute")
