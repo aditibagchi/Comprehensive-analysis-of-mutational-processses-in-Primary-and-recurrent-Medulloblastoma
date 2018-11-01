@@ -44,17 +44,30 @@ mafSummary(Germline_Recur_Maf)
 ## To create a DF with rows with  number of cases (Recurrent) and 96 columns of of the types of single nucleotide subsitution.
 ##Subset_Met_GermLine_73.csv was created earlier after deleting the 73 variants from the original MAF file that didnot match the context.
 Germline_Met_Recur_Sigs_Input_file <- read.csv("~/Desktop/Data_Analysis/last MAF files/SUbset_Mets_Germline_73.csv")
-Germline_Met_Recur_Sigs <- mut.to.sigs.input(Germline_Met_Recur_Sigs_Input_file, sample.id = "Sample", chr = "chr", pos = "X",
+Germline_Recur_Met_Sigs <- mut.to.sigs.input(Germline_Met_Recur_Sigs_Input_file, sample.id = "Sample", chr = "chr", pos = "X",
                                            ref = "ref", alt = "alt", bsg = NULL)
-View(Germline_Met_Recur_Sigs)
-
+View(Germline_Recur_Met_Sigs)
+RecurrentMB <- whichSignatures(tumor.ref = Germline_Recur_Met_Sigs , sample.id = "MB-REC-03",
+                               signatures.ref = signatures.nature2013, associated = c(),
+                               signatures.limit = NA, signature.cutoff = 0.06, contexts.needed = TRUE,
+                               tri.counts.method = "default")
+plotSignatures(RecurrentMB03)
+makePie(RecurrentMB03, sub = "RecurrentMB03", add.color = NULL)
 ##To create a DF with rows with  number of cases (Recurrent) and 96 columns of of the types of single nucleotide subsitution
 ## This will be done on the 9 cases in Germline_Recur_Maf
 #Create a CSV File with "Sample", "chr", 'pos", "ref", "alt" ; a subset of the maffile.
 Germline_Recur_Maf_Subset <- read.csv("~/Desktop/Data_Analysis/last MAF files/Germline_Recur_Maf_Subset.csv")
 Germline_Recur_Maf_Subset <- as.data.frame(Germline_Recur_Maf_Subset)
 Germline_Met_Recur_Sigs <- mut.to.sigs.input(Germline_Recur_Maf_Subset, sample.id = "sample", chr = "chr", pos = "pos",ref = "ref", alt = "alt", bsg = NULL)
+
 View(Germline_Met_Recur_Sigs)
+RecurrentMB16 <- whichSignatures(tumor.ref = Germline_Met_Recur_Sigs , sample.id = "MB-REC-16",
+                               signatures.ref = signatures.nature2013, associated = c(),
+                               signatures.limit = NA, signature.cutoff = 0.06, contexts.needed = TRUE,
+                               tri.counts.method = "default")
+plotSignatures(RecurrentMB16)
+makePie(RecurrentMB16, sub = "RecurrentMB16", add.color = NULL)
+
 ##The DF
              A[C>A]A A[C>A]C A[C>A]G A[C>A]T C[C>A]A C[C>A]C C[C>A]G C[C>A]T G[C>A]A G[C>A]C G[C>A]G G[C>A]T T[C>A]A T[C>A]C T[C>A]G
 MB-REC-04     115      73       5      36      90      51      19      81      83      43      10      30      90      57       4
@@ -126,8 +139,21 @@ MB-REC-13      59      24      25       5      24      33
 MB-REC-14      78      57      32      38      47      74
 MB-REC-15      29      10      16      11      12      31
 MB-REC-16      66      36      80      54      45     109
+
+
+
+
+
+
+
+
+
 ##To create a DF with rows with  number of cases (Recurrent) and 96 columns of of the types of single nucleotide subsitution
 ## This will be done on the  cases in Primary_Recurrent_ICGCDF_96.1.csv , these are recurrent cases in data base with no matched primary but matched germline and also recurrent cases with matched primary and no germline control. The variants for cases with no germline control were called against primary medullblastoma. 
+
+
+
+
 
 Recurrent_Med<- read.csv("~/Desktop/Data_Analysis/Data_analysis_June _2018/Initial_plan_for_analysis/Primary_recurrent_ICGC_DF_96_1.csv")
 ######
@@ -139,13 +165,19 @@ View(Final_recurrant_DF)
 Packages Used
 ##MutationalPatterns
 ##BSgenome.Hsapiens.UCSC.hg19
-Final_recurrent_DF1 <- read.csv("~/Desktop/Final_recurrent_DF.csv")
-Final_recurrent_DF1 <- as.data.frame(Final_recurrent_DF1)
+Final_recurrent_DF1 <- read_csv("~/Desktop/DF-Sigs_Input_Recurrent.csv")
+samples <- c("MB-REC-06", "MB-REC-02", "MB-REC-09", "MB-REC-10", "MB-REC-41", "MB-REC-03", "MB-REC-04", "MB-REC-07", 
+             "MB-REC-08", "MB-REC-11", "MB-REC-12", "MB-REC-13", "MB-REC-14", "MB-REC-15", "MB-REC-16", "MB-REC-26", 
+             "MB-REC-40", "MB-REC-45", "MB-REC-44", "MB-REC-46", "MB-REC-24", "MB-REC-43", "MB-REC-32", "MB-REC-39", 
+             "MB-REC-19", "MB-REC-01", "MB-REC-28", "MB-REC-47", "MB-REC-18", "MB-REC-33", "MB-REC-31", "MB-REC-23", 
+             "MB-REC-30", "MB-REC-42", "MB-REC-21", "MB-REC-34", "MB-REC-22", "MB-REC-35", "MB-REC-29", "MB-REC-27")
+
+Final_recurrent_DF1 <- as.data.frame(Final_recurrent_DF1, row.names = samples)
+View(Final_recurrent_DF1)
+Final_recurrent_DF1<- Final_recurrent_DF1[,c(2:97)]
 View(Final_recurrent_DF1)
 Final_recurrent_DF1_t <- t(Final_recurrent_DF1)
 View(Final_recurrent_DF1_t)
-Germline_Met_Recur_Sigs_t <- t(Germline_Met_Recur_Sigs)
-
 Packages Used
 ##MutationalPatterns
 ##BSgenome.Hsapiens.UCSC.hg19
@@ -153,10 +185,54 @@ Packages Used
 sp_url <- paste("http://cancer.sanger.ac.uk/cancergenome/assets/","signatures_probabilities.txt", sep = "")
 cancer_signatures = read.table(sp_url, sep = "\t", header = TRUE)
 # Match the order of the mutation types to MutationalPatterns standard
-new_order = match(row.names(DF_sigs_input_recurrent_t), cancer_signatures$Somatic.Mutation.Type)
+new_order = match(row.names(Final_recurrent_DF1_t), cancer_signatures$Somatic.Mutation.Type)
 # Reorder cancer signatures dataframe
 cancer_signatures = cancer_signatures[as.vector(new_order),]
 # Add trinucletiode changes names as row.names
 row.names(cancer_signatures) = cancer_signatures$Somatic.Mutation.Type
 # Keep only 96 contributions of the signatures in matrix
 cancer_signatures = as.matrix(cancer_signatures[,4:33])
+cos_sim(Final_recurrent_DF1_t[,1], cancer_signatures[,1])
+cos_sim_samples_signatures = cos_sim_matrix(Final_recurrent_DF1_t, cancer_signatures)
+# Plot heatmap with specified signature order
+plot_cosine_heatmap(cos_sim_samples_signatures,cluster_rows = TRUE)
+##Fit Mutation matrix to the cosmic mutational signature
+fit_res <- F, cancer_signatures)
+# Select signatures with some contribution
+select <- which(rowSums(fit_res$contribution) > 10)
+# Plot contribution barplot
+plot_contribution(fit_res$contribution[select,],cancer_signatures[,select],coord_flip = FALSE, mode = "absolute")
+
+##
+DF_Sigs_Input_Recurrent_matched_Primary <- read_csv("~/Desktop/DF-Sigs_Input_Recurrent_matched_Primary.csv")
+samples <- c("MB-REC-06", "MB-REC-02", "MB-REC-09", "MB-REC-10","MB-REC-03", "MB-REC-04", "MB-REC-07", 
+             "MB-REC-08", "MB-REC-11", "MB-REC-12", "MB-REC-13", "MB-REC-14", "MB-REC-15", "MB-REC-16")
+
+
+DF_Sigs_Input_Recurrent_matched_Primary <- as.data.frame(DF_Sigs_Input_Recurrent_matched_Primary, row.names = samples)
+View(DF_Sigs_Input_Recurrent_matched_Primary)
+DF_Sigs_Input_Recurrent_matched_Primary <- DF_Sigs_Input_Recurrent_matched_Primary[,c(2:97)]
+View(DF_Sigs_Input_Recurrent_matched_Primary)
+DF_Sigs_Input_Recurrent_matched_Primary_t <- t(DF_Sigs_Input_Recurrent_matched_Primary)
+View(DF_Sigs_Input_Recurrent_matched_Primary_t)
+
+sp_url <- paste("http://cancer.sanger.ac.uk/cancergenome/assets/","signatures_probabilities.txt", sep = "")
+cancer_signatures = read.table(sp_url, sep = "\t", header = TRUE)
+# Match the order of the mutation types to MutationalPatterns standard
+new_order = match(row.names(DF_Sigs_Input_Recurrent_matched_Primary_t), cancer_signatures$Somatic.Mutation.Type)
+# Reorder cancer signatures dataframe
+cancer_signatures = cancer_signatures[as.vector(new_order),]
+# Add trinucletiode changes names as row.names
+row.names(cancer_signatures) = cancer_signatures$Somatic.Mutation.Type
+# Keep only 96 contributions of the signatures in matrix
+cancer_signatures = as.matrix(cancer_signatures[,4:33])
+cos_sim(DF_Sigs_Input_Recurrent_matched_Primary_t[,1], cancer_signatures[,1])
+cos_sim_samples_signatures = cos_sim_matrix(DF_Sigs_Input_Recurrent_matched_Primary_t, cancer_signatures)
+# Plot heatmap with specified signature order
+plot_cosine_heatmap(cos_sim_samples_signatures,cluster_rows = TRUE)
+##Fit Mutation matrix to the cosmic mutational signature
+fit_res <- fit_to_signatures(Germline_Primary_sigs_t, cancer_signatures)
+# Select signatures with some contribution
+select <- which(rowSums(fit_res$contribution) > 10)
+# Plot contribution barplot
+plot_contribution(fit_res$contribution[select,],cancer_signatures[,select],coord_flip = FALSE, mode = "absolute")
