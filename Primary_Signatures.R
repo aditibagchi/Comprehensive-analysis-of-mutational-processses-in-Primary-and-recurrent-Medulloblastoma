@@ -1,5 +1,28 @@
 ##Primary medulloblastoma from ICGC
+Germline_Primary <- read_csv("~/Desktop/Data_Analysis/last MAF files/primary_germline_15_files.maf.txt")
+Germline_Primary_maf <- read.maf(maf = "~/Desktop/Data_Analysis/last MAF files/primary_germline_15_files.maf.txt")
+mafSummary(Germline_Primary_maf)
 
+##
+$variants.per.sample
+Tumor_Sample_Barcode Variants
+1:            MB-REC-06   501195
+2:            MB-REC-16   193733
+3:            MB-REC-11     7186
+4:            MB-REC-14     6780
+5:            MB-REC-04     5068
+6:            MB-REC-05     4834
+7:            MB-REC-15     4509
+8:            MB-REC-09     3523
+9:            MB-REC-02     3174
+10:            MB-REC-12     2101
+11:            MB-REC-03     2071
+12:            MB-REC-08     1925
+13:            MB-REC-13     1864
+14:            MB-REC-07     1569
+15:            MB-REC-10      964
+
+plotmafSummary(Germline_Primary_maf)
 Germline_Primary <- read.csv("~/Desktop/Data_Analysis/Data_Analysis_July_-December_2018/July_december_2018/Germline_Primary_137_final_Mut_sigs.csv")
 View(Germline_Primary)
 ##deconstructSigs
@@ -7,6 +30,7 @@ View(Germline_Primary)
 Germline_Primary_sigs <- mut.to.sigs.input(Germline_Primary, sample.id = "Sample", chr = "chr", pos = "X",
                   ref = "ref", alt = "alt", bsg = NULL)
 View(Germline_Primary_sigs)
+
 
 PrimaryMB02 <- whichSignatures(tumor.ref = Germline_Primary_sigs, sample.id = "MB-REC-02",
                                signatures.ref = signatures.nature2013, associated = c(),
