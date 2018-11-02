@@ -24,8 +24,8 @@ Alexandrove and collegaues develpoed an alogrithm using non-negative matric fact
 The deconstructSigs approache determines the linear combination of predefined signatures that most accurately reconstructs the mutational profile of a single tumor sample. 
 
 ###
-Step1 :
-Each sample information was avaiable as MAF file. The daat was substetted to create the most basic inpput of the deconctructSigs.It is a Dataframe consisting of genomic position base change for each mutation, as well as sample identifiert. Using the command "mut.to.sigs.input" this mutational data is convereted to n-row and 96 columns dataframe where n = number of unique samples. We created two such data frames one for primary and one for recurrent medulloblastoma. "Germline_Primary_Sigs_Input" and ""
+Step1 
+Each sample information was avaiable as MAF file. The data was substetted to create the most basic inpput of the deconctructSigs.It is a Dataframe consisting of genomic position base change for each mutation, as well as sample identifiert. Using the command "mut.to.sigs.input" this mutational data is convereted to n-row and 96 columns dataframe where n = number of unique samples. We created two such data frames one for primary and one for recurrent medulloblastoma. "Germline_Primary_Sigs_Input" and ""
 
 Step2:
 Using "whichSignatures" it was determined how much of each signature is present in the sample given. The identified signatures were then plotted.
